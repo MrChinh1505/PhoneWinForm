@@ -64,7 +64,7 @@ namespace MobilePhone.GUI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Order.save(new Order(txtOrderID.Text,txtAgentName.Text,txtDateTime.Text, txtTotal.Text));
+            Order.save(new Order(txtOrderID.Text,txtAgentID.Text,txtDateTime.Text, txtTotal.Text));
             for(int  i = 0; i < productOrderTable.Rows.Count; i++)
             {
                 string pID = productOrderTable.Rows[i].Cells[0].Value.ToString();
@@ -72,6 +72,7 @@ namespace MobilePhone.GUI
                 string price = productOrderTable.Rows[i].Cells[2].Value.ToString();
                 Order.saveDetail(txtOrderID.Text, pID, quan, price);
             }
+            MessageBox.Show("Successfully");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
