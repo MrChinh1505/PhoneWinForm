@@ -17,6 +17,7 @@ namespace MobilePhone.GUI
     public partial class FormImport : Form
     {
         private ReceiptService re = new ReceiptService();
+        private ProductService ps = new ProductService();
         public FormImport()
         {
             InitializeComponent();
@@ -25,31 +26,53 @@ namespace MobilePhone.GUI
         private void FormReceipt_Load(object sender, EventArgs e)
         {
             receiptTable.DataSource = re.findAll();
-            groupBox6.Enabled = false;
+            //groupBox6.Enabled = false;
             comboBox1.DataSource = re.SupplierList();
             comboBox1.DisplayMember = "SupplierName";
             comboBox1.ValueMember = "SupplierID";
-        }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
+            //comboBoxProduct.DataSource = ps.getAll();
+            //comboBoxProduct.DisplayMember = "ProductName";
+            //comboBoxProduct.ValueMember = "ProductId";
+
             txtDate.Enabled = true;
             btnSave.Enabled = true;
             btnDelete.Enabled = true;
 
-            groupBox6.Enabled = true;  
+            groupBox6.Enabled = true;
             groupBox5.Enabled = true;
+
+            //receiptDetailTable.DataSource = null;
+
+            // column headers
+            //receiptDetailTable.Columns.Add("ImportID", "ImportID");
+            //receiptDetailTable.Columns.Add("ProductID", "ProductID");
+            //receiptDetailTable.Columns.Add("Quantity", "Quantity");
+            //receiptDetailTable.Columns.Add("Price", "Price");
+
+            txtReID.Text = DateTime.Now.ToString("yyMMddHHss");
+            txtDate.Value = DateTime.Now;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            //txtDate.Enabled = true;
+            //btnSave.Enabled = true;
+            //btnDelete.Enabled = true;
+
+            //groupBox6.Enabled = true;  
+            //groupBox5.Enabled = true;
 
             receiptDetailTable.DataSource = null;
 
-            // column headers
+            //// column headers
             receiptDetailTable.Columns.Add("ImportID", "ImportID");
             receiptDetailTable.Columns.Add("ProductID", "ProductID");
             receiptDetailTable.Columns.Add("Quantity", "Quantity");
             receiptDetailTable.Columns.Add("Price", "Price");
-            
-            txtReID.Text = DateTime.Now.ToString("yyMMddHHss");
-            txtDate.Value = DateTime.Now;
+
+            //txtReID.Text = DateTime.Now.ToString("yyMMddHHss");
+            //txtDate.Value = DateTime.Now;
         }
 
         public void handleNumber(object sender, KeyPressEventArgs e)
@@ -99,6 +122,7 @@ namespace MobilePhone.GUI
                 re.saveDetail(txtReID.Text, pID, quan, price);
             }
             receiptTable.DataSource = re.findAll();
+            MessageBox.Show("Successfully");
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -112,25 +136,28 @@ namespace MobilePhone.GUI
 
         private void receiptTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            receiptDetailTable.Columns.Clear();
             txtDate.Enabled = false;
             DataTable dt = re.findProductByReceiptId(receiptTable.CurrentRow.Cells[0].Value.ToString());
             DataTable dt1 = re.findByReceiptId(receiptTable.CurrentRow.Cells[0].Value.ToString());
             if(dt != null)
             {
                 receiptDetailTable.DataSource = dt;
-                txtReID.Text = dt1.Rows[0][0].ToString();
-                txtDate.Value = DateTime.Parse(dt1.Rows[0][1].ToString());
-                comboBox1.SelectedValue = dt1.Rows[0][2].ToString();
-                totalBox.Text = dt1.Rows[0][3].ToString();
+                //txtReID.Text = dt1.Rows[0][0].ToString();
+                //txtDate.Value = DateTime.Parse(dt1.Rows[0][1].ToString());
+                //comboBox1.SelectedValue = dt1.Rows[0][2].ToString();
+                //totalBox.Text = dt1.Rows[0][3].ToString();
             }
-            btnDelete.Enabled = true;
-            btnSave.Enabled = true;
+            //btnDelete.Enabled = true;
+            //btnSave.Enabled = true;
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-           
-
+            receiptDetailTable.Columns.Add("ImportID", "ImportID");
+            receiptDetailTable.Columns.Add("ProductID", "ProductID");
+            receiptDetailTable.Columns.Add("Quantity", "Quantity");
+            receiptDetailTable.Columns.Add("Price", "Price");
             receiptDetailTable.Rows.Add(txtPID.Text, txtProName.Text, txtQuan.Text, txtImportPrice.Text);
             totalBox.Text = calcTotal().ToString();
         }
@@ -222,6 +249,49 @@ namespace MobilePhone.GUI
             txtProName.Text = receiptDetailTable.CurrentRow.Cells[1].Value.ToString();
             txtQuan.Text = receiptDetailTable.CurrentRow.Cells[2].Value.ToString();
             txtImportPrice.Text = receiptDetailTable.CurrentRow.Cells[3].Value.ToString();
+        }
+
+        private void comboBoxProduct_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            //Product product = ps.find();
+            DataTable dt = ps.find(comboBoxProduct.SelectedValue.ToString());
+            DataRow dataRowrow = dt.Rows[0];
+            txtPID.Text = dataRowrow["ProductID"].ToString();
+            txtProName.Text = dataRowrow["ProductName"].ToString();
+            //txtQuan.Text = dataRowrow["ProductName"].ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FormProduct formProduct = new FormProduct();
+            formProduct.ShowDialog();
+        }
+
+        private void comboBoxProduct_MouseClick(object sender, MouseEventArgs e)
+        {
+            comboBoxProduct.DataSource = ps.getAll();
+            comboBoxProduct.DisplayMember = "ProductName";
+            comboBoxProduct.ValueMember = "ProductId";
+
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            receiptDetailTable.DataSource = null;
+            //receiptDetailTable.Columns.Add("ImportID", "ImportID");
+            //receiptDetailTable.Columns.Add("ProductID", "ProductID");
+            //receiptDetailTable.Columns.Add("Quantity", "Quantity");
+            //receiptDetailTable.Columns.Add("Price", "Price");
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

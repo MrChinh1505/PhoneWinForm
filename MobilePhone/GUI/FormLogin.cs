@@ -40,5 +40,15 @@ namespace MobilePhone.GUI
                 Application.Exit();
             }
         }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+            pwd.UseSystemPasswordChar = true;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            pwd.UseSystemPasswordChar = !pwd.UseSystemPasswordChar;
+        }
     }
 }

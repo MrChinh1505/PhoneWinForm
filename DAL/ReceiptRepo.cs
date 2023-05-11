@@ -33,6 +33,11 @@ namespace DAL
             return query("SELECT * FROM ImportTable");
         }
 
+        public DataTable bestProduct() 
+        {
+            return query("SELECT TOP 10 \n    p.ProductName, \n    SUM(od.Quan) AS TotalQuantity\nFROM \n    Product p\n    INNER JOIN OrderDetail od ON p.ProductID = od.ProductID\nGROUP BY \n    p.ProductName\nORDER BY \n    TotalQuantity DESC;");
+        }
+
         public void save(Receipt r)
         {
             noneQuery($"INSERT INTO ImportTable VALUES ('{r.id}', '{r.date}', '{r.supplier}',{r.total})");

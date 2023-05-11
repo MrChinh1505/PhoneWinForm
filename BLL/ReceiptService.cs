@@ -34,6 +34,10 @@ namespace BLL
         {
             return re.findProductByReceiptId(id);
         }
+        //public Database bestProduct()
+        //{
+        //    return re.bestProduct();
+        //}
 
         public void save(Receipt r)
         {

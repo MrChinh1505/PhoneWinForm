@@ -125,6 +125,7 @@ namespace MobilePhone.GUI
                 agent.save(new Agent(tableAgent.Rows[i].Cells[0].Value.ToString(), tableAgent.Rows[i].Cells[1].Value.ToString(), tableAgent.Rows[i].Cells[2].Value.ToString(), tableAgent.Rows[i].Cells[3].Value.ToString(), tableAgent.Rows[i].Cells[4].Value.ToString()));
             }
             btnAll_Click(sender, e);
+            MessageBox.Show("Successfully");
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

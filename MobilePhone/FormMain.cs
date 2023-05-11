@@ -20,8 +20,8 @@ namespace MobilePhone
         public FormMain()
         {
             InitializeComponent();
-            //FormLogin f = new FormLogin();
-            //f.ShowDialog();
+            FormLogin f = new FormLogin();
+            f.ShowDialog();
         }
 
         public void OpenChildForm(Form newForm)
@@ -85,6 +85,16 @@ namespace MobilePhone
         private void FormMain_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnStatistics_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FormAnalyze());
         }
     }
 }

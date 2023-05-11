@@ -109,7 +109,15 @@ namespace MobilePhone.GUI
         {
             dataGridView1.DataSource = rs.findAll();
             dataGridView2.DataSource = os.findAll();
-            listBox.SelectedIndex = 0;
+            dataGridView3.DataSource = os.TopSeller(10);
+            chart1.DataSource = os.TopSeller(10);
+            chart1.Series["Amount"].XValueMember = "ProductName";
+            chart1.Series["Amount"].YValueMembers = "TotalQuantity";
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

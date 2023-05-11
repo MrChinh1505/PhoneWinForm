@@ -159,6 +159,7 @@ namespace MobilePhone.GUI
             {
                 productService.save(new Product(tableProduct.Rows[i].Cells[0].Value.ToString(), tableProduct.Rows[i].Cells[1].Value.ToString(), tableProduct.Rows[i].Cells[2].Value.ToString(), tableProduct.Rows[i].Cells[3].Value.ToString()));
             }
+            MessageBox.Show("Successfully");
         }
 
         private void tableProduct_Click(object sender, DataGridViewCellEventArgs e)
@@ -213,6 +214,7 @@ namespace MobilePhone.GUI
             {
                 productService.save(new Product(tableProductManager.Rows[i].Cells[0].Value.ToString(), tableProductManager.Rows[i].Cells[1].Value.ToString(), tableProductManager.Rows[i].Cells[3].Value.ToString(), tableProductManager.Rows[i].Cells[2].Value.ToString()));
             }
+            MessageBox.Show("Successfully");
         }
     }
 }
